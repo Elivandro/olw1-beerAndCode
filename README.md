@@ -60,15 +60,11 @@ Gere uma chave para aplicação
 php artisan key:generate
 ```
 
-### configure no arquivo .env
+configure no arquivo .env
 
 ```
 APP_NAME
-```
 
-configure as variaveis no .env
-
-```
 DB_CONNECTION=
 DB_HOST=
 DB_PORT=
@@ -76,11 +72,11 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 
-QUEUE_CONNECTION=redis
+QUEUE_CONNECTION=
 
 MAIL_MAILER=
 MAIL_HOST=
-MAIL_PORT=1025
+MAIL_PORT=
 MAIL_USERNAME=
 MAIL_PASSWORD=
 MAIL_ENCRYPTION=
