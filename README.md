@@ -2,7 +2,7 @@
 
 ## Framework:
 
-- [**Laravel 9.35**](https://laravel.com/)
+- [**Laravel 9.52**](https://laravel.com/)
 - [**VueJS**](https://vuejs.org/)
 
 ## Pacote:
@@ -16,12 +16,7 @@
 
 ## Requerimenos minimos
 
-- [**PHP 8**](https://www.php.net/)
-- [**REDIS**](https://redis.io/docs/getting-started/)
-- [**MinIO**](https://min.io/)
-- [**MailHog**](https://github.com/mailhog/MailHog)
-- [**Composer**](https://getcomposer.org/)
-- [**NodeJS**](https://nodejs.org/en/)
+- [**Docker**](https://docs.docker.com/engine/install/)
 - [**Git**](https://git-scm.com/)
 
 
@@ -38,14 +33,8 @@ Consumindo uma API de bebidas e exportando em excel uma lista de bebidas filtrad
 Cópie o repositório:
 
 ```
-git clone git@github.com:Elivandro/devmedia_appCliente.git
-```
-
-Para instalar as dependências:
-
-```
-composer install
-npm install
+git clone git@github.com:Elivandro/olw1-beerAndCode.git
+cd olw1-beerAndcode
 ```
 
 renomeie arquivo de variaveis env
@@ -54,10 +43,31 @@ renomeie arquivo de variaveis env
 cp .env.example .env
 ```
 
+Para instalar as dependências do composer:
+
+```
+docker run --rm -it\
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+Inicie o sail
+```
+./vendor/bin/sail up -d
+```
+
+Para instalar as dependências do npm:
+```
+./vendor/bin/sail npm install
+```
+
 Gere uma chave para aplicação
 
 ```
-php artisan key:generate
+./vendor/bin/sail artisan key:generate
 ```
 
 configure no arquivo .env
@@ -72,7 +82,9 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 
-QUEUE_CONNECTION=
+QUEUE_CONNECTION=redis
+
+REDIS_HOST=redis
 
 MAIL_MAILER=
 MAIL_HOST=
@@ -93,25 +105,29 @@ AWS_USE_PATH_STYLE_ENDPOINT=
 rode as migrações
 
 ```
-php artisan migrate
+./vendor/bin/sail artisan migrate
 ```
 
 coloque alguns dados no banco
 
 ```
-php artisan db:seed
+./vendor/bin/sail artisan db:seed
 ```
 
-configurando o vite (o primeiro precisa permanecer em execução, o segundo compila tudo.)
+rodar o vite
 
 ```
-npm run dev
-npm run build
+./vendor/bin/sail npm run dev
 ```
 
-por fim rode o servidor
+por fim rode o servidor de filas
 
 ```
-php artisan queue:work
-php artisan serve
+./vendor/bin/sail artisan queue:work
+```
+
+
+coloque um apelido ao sail
+```
+https://laravel.com/docs/10.x/sail#configuring-a-shell-alias
 ```
